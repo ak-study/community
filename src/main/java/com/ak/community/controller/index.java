@@ -20,7 +20,7 @@ public class index {
     @Autowired
     UserMapper userMapper;
 
-    @GetMapping("/index")
+    @GetMapping("/")
     public String indexController(HttpServletRequest request){
         //获取cookie数组，查询名字为token的值，然后根据该值查找数据库对应的用户，如果查找到则显示登陆状态
         Cookie[] cookies = request.getCookies();

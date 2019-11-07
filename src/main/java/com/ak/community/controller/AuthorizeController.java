@@ -65,10 +65,10 @@ public class AuthorizeController {
             System.out.println(token);
             //用过浏览器的响应，添加cookie
             response.addCookie(new Cookie("token",token));
-            return "redirect:index";
+            return "redirect:/";
         }else{
             //登录失败
-            return "redirect:index";
+            return "redirect:/";
         }
     }
 }
