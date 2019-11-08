@@ -10,7 +10,7 @@ public class GithubUser {
     private String name;
     private Long id;
     private String bio;
-    private String avatarUrl;
+    private String avatar_url;
 
     public String getName() {
         return name;
@@ -37,10 +37,10 @@ public class GithubUser {
     }
 
     public String getAvatarUrl() {
-        return avatarUrl;
+        return avatar_url;
     }
 
     public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+        this.avatar_url = avatarUrl;
     }
 }

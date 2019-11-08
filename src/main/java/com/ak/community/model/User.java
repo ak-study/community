@@ -3,10 +3,19 @@ package com.ak.community.model;
 public class User {
     private Long id;
     private String name;
-    private String accountid;
+    private String account_id;
     private String token;
-    private Long gmtCreate;
-    private Long gmtModified;
+    private Long gmt_create;
+    private Long gmt_modified;
+    private String avatar_url;
+
+    public String getAvatarUrl() {
+        return avatar_url;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatar_url = avatarUrl;
+    }
 
     public Long getId() {
         return id;
@@ -25,11 +34,11 @@ public class User {
     }
 
     public String getAccountid() {
-        return accountid;
+        return account_id;
     }
 
     public void setAccountid(String accountid) {
-        this.accountid = accountid;
+        this.account_id = accountid;
     }
 
     public String getToken() {
@@ -41,18 +50,31 @@ public class User {
     }
 
     public Long getGmtCreate() {
-        return gmtCreate;
+        return gmt_create;
     }
 
     public void setGmtCreate(Long gmtCreate) {
-        this.gmtCreate = gmtCreate;
+        this.gmt_create = gmtCreate;
     }
 
     public Long getGmtModified() {
-        return gmtModified;
+        return gmt_modified;
     }
 
     public void setGmtModified(Long gmtModified) {
-        this.gmtModified = gmtModified;
+        this.gmt_modified = gmtModified;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", accountid='" + account_id + '\'' +
+                ", token='" + token + '\'' +
+                ", gmtCreate=" + gmt_create +
+                ", gmtModified=" + gmt_modified +
+                ", avatarUrl='" + avatar_url + '\'' +
+                '}';
     }
 }
