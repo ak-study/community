@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>AK社区</title>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" href="/css/community.css"/>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="/js/bootstrap.min.js" type="application/javascript"> </script>
+    </head>
+    <body>
+    <div th:insert="~{navigation :: nav}"></div>
+        <div class="container-fluid main">
+            <br>
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                <h1><span th:text="${sectionName}"></span></h1>
+            </div>
+                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                     <div class="list-group">
+                <a href="/profile/questions" class="list-group-item " th:classappend="${section}=='question'?'active':''"><span class="badge">14</span>我的问题</a>
+                <a href="/profile/newMsg" class="list-group-item " th:classappend="${section}=='newMsg'?'active':''"><span class="badge">999</span>最新消息</a>
+                     </div>
+              </div>
+        </div>
+    </body>
+</html>
