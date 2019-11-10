@@ -3,11 +3,11 @@
     <head>
         <title>AK社区</title>
         <meta charset="UTF-8"/>
-        <link rel="stylesheet" href="css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
-        <link rel="stylesheet" href="css/community.css"/>
+        <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" href="/css/community.css"/>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
-        <script src="js/bootstrap.min.js" type="application/javascript"> </script>
+        <script src="/js/bootstrap.min.js" type="application/javascript"> </script>
     </head>
     <body>
     <div th:insert="~{navigation :: nav}"></div>
@@ -18,25 +18,30 @@
                 <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
                 <p><a class="btn btn-primary btn-lg" href="#" role="button">了解更多</a></p>
             </div>
+
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2>
                 <span class="glyphicon glyphicon-list" aria-hidden="true"></span> 发现</h2>
-
+            <br/>
+                <span class="alert alert-danger" th:text="${error}" th:if="${error}!=null"></span>
             <hr/>
 
             <div class="media" th:each="question : ${questions}">
                 <div class="media-left">
                     <a href="#">
 <!--                        <img class="media-object img-circle" th:src="question.user.avatar_url"/>-->
-                        <img class="media-object img-circle" src="111.jpg"/>
+                        <img class="media-object img-circle" src="/111.jpg"/>
                     </a>
                 </div>
                 <div class="media-body">
-                    <h3 class="media-heading" th:text="${question.title}"></h3>
+                    <a th:href="@{'/question/'+${question.getId()}}" ><h3 class="media-heading" th:text="${question.title}"></h3></a>
                     <span th:text="${question.description}"></span><br/>
                     <span class="text-desc">
-                        <span th:text="${question.commentCount}"></span> 个回复 ·<span th:text="${question.viewCount}"></span>次浏览 ·
-                        <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span></span>
+                         作者·<span th:text="${question.user.name}"></span>
+                        ·<span th:text="${question.commentCount}"></span> 个回复
+                        ·<span th:text="${question.viewCount}"></span>次浏览
+                        ·<span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+                    </span>
                 </div>
             </div>
             <nav aria-label="Page navigation">

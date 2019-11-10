@@ -8,6 +8,15 @@ public class User {
     private Long gmt_create;
     private Long gmt_modified;
     private String avatar_url;
+    private String bio;
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 
     public String getAvatarUrl() {
         return avatar_url;

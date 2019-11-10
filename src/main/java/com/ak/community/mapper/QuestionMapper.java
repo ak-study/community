@@ -4,6 +4,7 @@ import com.ak.community.model.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,4 +17,16 @@ public interface QuestionMapper {
 
     @Select("select * from question")
     List<Question> getQuestionList();
+
+    @Select("select * from question where creator = #{creator}")
+    List<Question> getQuestionByPerson(Long creator);
+
+    @Select("select count(1) from question where creator = #{creator}")
+    Integer getQuestionCount(Long creator);
+
+    @Select("select * from question where id =#{id}")
+    Question getQuestionByID(Integer id);
+
+    @Update("update question set title=#{title},description=#{description},tag=#{tag} where id=#{id}")
+    void updateQuestionByID(Question question);
 }
