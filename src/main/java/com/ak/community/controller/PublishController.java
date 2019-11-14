@@ -56,7 +56,7 @@ public class PublishController {
     }
 
     @GetMapping("/publish/{id}")
-    public String edit(@PathVariable Integer id, Model model){
+    public String edit(@PathVariable Long id, Model model){
         Question question = questionMapper.getQuestionByID(id);
         if(question==null){
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);

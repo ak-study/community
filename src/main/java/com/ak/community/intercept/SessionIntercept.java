@@ -20,6 +20,7 @@ public class SessionIntercept implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //获取cookie数组，查询名字为token的值，然后根据该值查找数据库对应的用户，如果查找到则显示登陆状态
         Cookie[] cookies = request.getCookies();
+        if(cookies!=null)
         for (Cookie cookie : cookies) {
             if(cookie.getName().equals("token")){
                 String token = cookie.getValue();

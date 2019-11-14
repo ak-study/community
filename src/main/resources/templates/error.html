@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>AK社区</title>
-        <meta charset="UTF-8"/>
-        <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
-        <link rel="stylesheet" href="/css/community.css"/>
-        <script src="http://code.jquery.com/jquery-latest.js"></script>
-        <script src="/js/bootstrap.min.js" type="application/javascript"> </script>
-    </head>
-    <body class="text-center">
-    <div th:insert="~{navigation :: nav}"></div>
-    <div class="text-xl-center">
-        <div class="jumbotron" style="min-height: 300px;">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h1>页面跳转异常</h1>
-                <p th:text="'错误状态码: '+${status}"></p>
-                <p th:if="${status}=='404' ">网址输错了，憨批</p>
-                <p  th:text="${message}"></p>
-                <p><a class="btn btn-primary btn-lg" href="/" role="button">了解更多憨批</a></p>
-            </div>
+<head>
+    <title>AK社区</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/community.css"/>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body class="text-center">
+<div th:insert="~{navigation :: nav}"></div>
+<div class="text-xl-center">
+    <div class="jumbotron" style="min-height: 300px;">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><h1>页面跳转异常</h1>
+            <p th:text="'错误状态码: '+${status}"></p>
+            <p th:if="${status}=='404' ">网址输错了，憨批</p>
+            <p th:text="${message}"></p>
+            <p><a class="btn btn-primary btn-lg" href="/" role="button">了解更多憨批</a></p>
         </div>
+    </div>
 
-    </div>
-    </div>
-    </body>
+</div>
+</div>
+</body>
 </html>

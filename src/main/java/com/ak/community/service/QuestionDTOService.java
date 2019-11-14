@@ -11,6 +11,7 @@ import com.ak.community.model.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class QuestionDTOService {
         }
         return questionDTOS;
     }
-    public QuestionDTO getQuestionDTO(Integer id) throws CustomizeException {
+    public QuestionDTO getQuestionDTO(Long id) throws CustomizeException {
         Question questionByID = questionMapper.getQuestionByID(id);
         if(questionByID==null){
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
@@ -72,5 +73,10 @@ public class QuestionDTOService {
         BeanUtils.copyProperties(questionByID,questionDTO);
         questionDTO.setUser(user);
         return  questionDTO;
+    }
+
+    @Transactional
+    public void incViewCount(Long id){
+        questionMapper.incViewCount(id);
     }
 }

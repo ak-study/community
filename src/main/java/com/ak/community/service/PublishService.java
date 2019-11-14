@@ -6,6 +6,7 @@ import com.ak.community.model.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 public class PublishService {
     @Autowired
     QuestionMapper questionMapper;
+
+    @Transactional
     public void createOrUpdate(Long id,Question question,User newUser){
         if(id!=null){
             questionMapper.updateQuestionByID(question);

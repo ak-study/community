@@ -25,8 +25,17 @@ public interface QuestionMapper {
     Integer getQuestionCount(Long creator);
 
     @Select("select * from question where id =#{id}")
-    Question getQuestionByID(Integer id);
+    Question getQuestionByID(Long id);
 
     @Update("update question set title=#{title},description=#{description},tag=#{tag} where id=#{id}")
     void updateQuestionByID(Question question);
+
+    @Update("update question set view_count=view_count+1 where id =#{id}")
+    void incViewCount(Long id);
+
+    @Update("update question set comment_count=comment_count+1 where id =#{id}")
+    void incCommentCount(Long id);
+
+    @Update("update question set comment_count=comment_count-1 where id =#{id}")
+    void downCommentCount(Long id);
 }

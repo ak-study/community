@@ -15,9 +15,9 @@ public class PageService {
     @Autowired
     QuestionDTOService questionDTOService;
     public void doPage(Integer pageNum, Model model){
-        Page<Object> page = PageHelper.startPage(pageNum, 5);
+        Page<Object> page = PageHelper.startPage(pageNum, 6);
         List<QuestionDTO> questionDTOList = questionDTOService.getQuestionDTOList();
-        PageInfo<QuestionDTO> pageInfo = new PageInfo<>(questionDTOList,5);
+        PageInfo<QuestionDTO> pageInfo = new PageInfo<>(questionDTOList,6);
         pageInfo.setPages(page.getPages());//总页数
         pageInfo.setTotal(page.getTotal());//总条数
         boolean hasNextPage=pageNum<pageInfo.getPages();

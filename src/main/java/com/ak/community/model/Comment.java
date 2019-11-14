@@ -1,16 +1,18 @@
-package com.ak.community.mapper;
+package com.ak.community.model;
+
 
 import lombok.Data;
 
 @Data
 public class Comment {
-    private Integer id;
+    private Long id;
     private Long parent_id;
     private Integer type;
-    private Integer commentator;
+    private Long commentator;
     private Long gmt_create;
     private Long gmt_modified;
     private Long like_count;
     private String content;
+    private Integer comment_count;
 
 }

@@ -1,74 +1,77 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>AK社区</title>
-        <meta charset="UTF-8"/>
-        <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
-        <link rel="stylesheet" href="/css/community.css"/>
-        <script src="http://code.jquery.com/jquery-latest.js"></script>
-        <script src="/js/bootstrap.min.js" type="application/javascript"> </script>
-    </head>
-    <body>
-    <div th:insert="~{navigation :: nav}"></div>
-        <div class="container-fluid main">
-            <br>
-            <div class="jumbotron">
-                <h1>Welcome to my Community</h1>
-                <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-                <p><a class="btn btn-primary btn-lg" href="#" role="button">了解更多</a></p>
+<head>
+    <title>AK社区</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/community.css"/>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:insert="~{navigation :: nav}"></div>
+<div class="container-fluid main">
+    <br>
+    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 ">
+        <h2>
+            <span class="glyphicon glyphicon-list" aria-hidden="true"></span> 发现</h2>
+        <br/>
+        <span class="alert alert-danger" th:text="${error}" th:if="${error}!=null"></span>
+        <hr/>
+
+        <div class="media" th:each="question : ${questions}">
+            <div class="media-left">
+                <a href="#">
+                    <!--                        <img class="media-object img-circle" th:src="question.user.avatar_url"/>-->
+                    <p><img class="media-object img-circle" src="/111.jpg"/></p>
+                </a>
             </div>
-
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h2>
-                <span class="glyphicon glyphicon-list" aria-hidden="true"></span> 发现</h2>
-            <br/>
-                <span class="alert alert-danger" th:text="${error}" th:if="${error}!=null"></span>
-            <hr/>
-
-            <div class="media" th:each="question : ${questions}">
-                <div class="media-left">
-                    <a href="#">
-<!--                        <img class="media-object img-circle" th:src="question.user.avatar_url"/>-->
-                        <img class="media-object img-circle" src="/111.jpg"/>
-                    </a>
-                </div>
-                <div class="media-body">
-                    <a th:href="@{'/question/'+${question.getId()}}" ><h3 class="media-heading" th:text="${question.title}"></h3></a>
-                    <span th:text="${question.description}"></span><br/>
-                    <span class="text-desc">
+            <div class="media-body">
+                <p><a class="link" th:href="@{'/question/'+${question.getId()}}"><h3 class="media-heading "
+                                                                        th:text="${question.title}"></h3></a></p>
+                <span th:text="${question.description}"></span><br/>
+                <span class="text-desc">
                          作者·<span th:text="${question.user.name}"></span>
                         ·<span th:text="${question.commentCount}"></span> 个回复
                         ·<span th:text="${question.viewCount}"></span>次浏览
                         ·<span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
                     </span>
-                </div>
             </div>
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <span><p>当前 <span th:text="${pageNum}"></span> 页,总 <span th:text="${pageInfo.pages}"></span> 页,共 <span th:text="${pageInfo.total}"></span> 条记录</p></span>
-                    <li>
-                        <a th:href="@{/}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li><a th:href="@{/(pageNum=${hasPrePage}?${prePage}:1)}">上一页</a></li>
-
-                    <li><a th:if="${pageNum}-2>=1" th:href="@{/(pageNum=${pageNum }-2)}" th:text="${pageNum}-2"></a></li>
-                    <li><a th:if="${pageNum}-1>=1" th:href="@{/(pageNum=${pageNum }-1)}" th:text="${pageNum}-1"></a></li>
-                    <li><a th:if="${pageNum<=pageInfo.pages}" th:href="@{/(pageNum=${pageNum })}" th:text="${pageNum}"></a></li>
-                    <li><a th:if="${pageNum}+1<=${pageInfo.pages}" th:href="@{/(pageNum=${pageNum }+1)}" th:text="${pageNum}+1"></a></li>
-                    <li><a th:if="${pageNum}+2<=${pageInfo.pages}" th:href="@{/(pageNum=${pageNum }+2)}" th:text="${pageNum}+2"></a></li>
-
-                    <li><a th:href="@{/(pageNum=${hasNextPage}?${nextPage}:${pageInfo.pages})}">下一页</a></li>
-                    <li>
-                        <a th:href="@{/(pageNum=${pageInfo.pages})}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
         </div>
-        </div>
-    </body>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <span class="mun"><p>当前 <span th:text="${pageNum}"></span> 页,总 <span th:text="${pageInfo.pages}"></span> 页,共 <span
+                        th:text="${pageInfo.total}"></span> 条记录</p></span>
+                <li>
+                    <a th:href="@{/}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li><a th:href="@{/(pageNum=${hasPrePage}?${prePage}:1)}">上一页</a></li>
+
+                <li><a th:if="${pageNum}-2>=1" th:href="@{/(pageNum=${pageNum }-2)}" th:text="${pageNum}-2"></a></li>
+                <li><a th:if="${pageNum}-1>=1" th:href="@{/(pageNum=${pageNum }-1)}" th:text="${pageNum}-1"></a></li>
+                <li><a th:if="${pageNum<=pageInfo.pages}" th:href="@{/(pageNum=${pageNum })}" th:text="${pageNum}"></a>
+                </li>
+                <li><a th:if="${pageNum}+1<=${pageInfo.pages}" th:href="@{/(pageNum=${pageNum }+1)}"
+                       th:text="${pageNum}+1"></a></li>
+                <li><a th:if="${pageNum}+2<=${pageInfo.pages}" th:href="@{/(pageNum=${pageNum }+2)}"
+                       th:text="${pageNum}+2"></a></li>
+
+                <li><a th:href="@{/(pageNum=${hasNextPage}?${nextPage}:${pageInfo.pages})}">下一页</a></li>
+                <li>
+                    <a th:href="@{/(pageNum=${pageInfo.pages})}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 main-right">
+        <h1><p>侧栏</p></h1>
+        <div th:insert="~{side :: side}"></div>
+    </div>
+</div>
+</body>
 </html>
