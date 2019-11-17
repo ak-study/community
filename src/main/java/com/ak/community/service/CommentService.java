@@ -1,12 +1,16 @@
 package com.ak.community.service;
 
 import com.ak.community.dto.CommentDTO;
+import com.ak.community.enums.NotificationStatusEnum;
+import com.ak.community.enums.NotificationTypeEnum;
 import com.ak.community.exception.CustomizeErrorCode;
 import com.ak.community.exception.CustomizeException;
 import com.ak.community.mapper.CommentMapper;
+import com.ak.community.mapper.NotificationMapper;
 import com.ak.community.mapper.QuestionMapper;
 import com.ak.community.mapper.UserMapper;
 import com.ak.community.model.Comment;
+import com.ak.community.model.Notification;
 import com.ak.community.model.Question;
 import com.ak.community.model.User;
 import org.springframework.beans.BeanUtils;
@@ -28,6 +32,9 @@ public class CommentService {
     @Autowired
     UserMapper userMapper;
 
+    @Autowired
+    NotificationMapper notificationMapper;
+
     //@Transactional为该方法添加事务机制
     @Transactional
     public boolean insertComment(Comment comment){
@@ -41,23 +48,42 @@ public class CommentService {
         }else if(comment.getContent()==null){
             throw new CustomizeException(CustomizeErrorCode.CONTENT_IS_EMPTY);
         }
-        Question question = questionMapper.getQuestionByID(comment.getParent_id());
         //如果回复类型为0，则回复问题
         if(comment.getType()==0){
+            Question question = questionMapper.getQuestionByID(comment.getParent_id());
             if(question==null){
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
-            questionMapper.incCommentCount(question.getId());//该问题的评论数+1
+            questionMapper.incCommentCount(question.getId());//一级评论对应的问题的评论数+1
             commentMapper.insertComment(comment);
+            createNotify(comment,question.getCreator(), NotificationTypeEnum.REPLY_QUESTION);//创建通知
         }else{
             //否则回复的就是评论
-            Question question1 = questionMapper.getQuestionByID(commentMapper.getCommentByID(comment.getParent_id()).getParent_id());
-            questionMapper.incCommentCount(question1.getId());
-            commentMapper.incCommentCount(comment.getParent_id());
-            commentMapper.insertComment(comment);
+            Comment parentComment = commentMapper.getCommentByID(comment.getParent_id());
+            questionMapper.incCommentCount(parentComment.getParent_id());//二级评论对应的问题的评论数+1
+            commentMapper.incCommentCount(comment.getParent_id());//二级评论对应的父评论的评论数+1
+            commentMapper.insertComment(comment);//添加二级评论到数据库
+            createNotify(comment, parentComment.getCommentator(), NotificationTypeEnum.REPLY_COMMENT);//创建通知
         }
 
         return true;
+    }
+
+    /**
+     *
+     * @param comment 通知的评论或者问题
+     * @param receiver 父评论/问题的创作者
+     * @param reply 通知类型
+     */
+    private void createNotify(Comment comment, Long receiver, NotificationTypeEnum reply) {
+        Notification notification = new Notification();
+        notification.setType(reply.getType());
+        notification.setGmt_create(System.currentTimeMillis());
+        notification.setOuterId(comment.getParent_id());//被通知者的评论/问题id
+        notification.setNotifier(comment.getCommentator());//通知者的id
+        notification.setStatus(NotificationStatusEnum.READ.getStatus());
+        notification.setReceiver(receiver);//被通知者的id
+        notificationMapper.insertNotification(notification);
     }
 
     //获取传入问题id的所有评论
@@ -80,14 +106,14 @@ public class CommentService {
     }
     //获取所有二级评论列表
     //这里的ID是一级评论的id
-    public List<CommentDTO> getSecondCommentList(Long id){
+    public List<CommentDTO> getSecondCommentDTOList(Long id){
 
         List<Comment> commentList = commentMapper.getCommentList();
         List<CommentDTO>commentDTOList=new ArrayList<CommentDTO>();
         for (Comment comment : commentList) {
             if( comment.getType()==1){
                 Comment commentByID = commentMapper.getCommentByID(comment.getParent_id());
-                if(commentByID.getParent_id()==id) {
+                if(commentByID!=null&&commentByID.getParent_id()==id) {
                     CommentDTO commentDTO = new CommentDTO();
                     Long commentator = comment.getCommentator();
                     User user = userMapper.findUserByID(commentator);

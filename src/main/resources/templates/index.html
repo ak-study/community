@@ -28,15 +28,18 @@
                 </a>
             </div>
             <div class="media-body">
-                <p><a class="link" th:href="@{'/question/'+${question.getId()}}"><h3 class="media-heading "
-                                                                        th:text="${question.title}"></h3></a></p>
-                <span th:text="${question.description}"></span><br/>
+                <p>
+                    <a class="link" th:href="@{'/question/'+${question.getId()}}">
+                        <h4 class="media-heading " th:text="${question.title}"></h4>
+                    </a>
+                </p>
+<!--                <h6><span th:text="${question.description}"></span></h6>-->
                 <span class="text-desc">
                          作者·<span th:text="${question.user.name}"></span>
                         ·<span th:text="${question.commentCount}"></span> 个回复
                         ·<span th:text="${question.viewCount}"></span>次浏览
                         ·<span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
-                    </span>
+                </span>
             </div>
         </div>
         <nav aria-label="Page navigation">

@@ -1,6 +1,6 @@
 body{
     background-color: #efefef;
-    background-image: url("/bg.png");
+    background-image: url("/static/bg4.jpg");
 }
 .main{
     border-radius: 20px;
@@ -8,11 +8,11 @@ body{
     margin-top: 60px;
     margin-right: 400px;
     margin-left: 400px;
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255,255,255,0.9);
 }
 .color{
     background-color: white;
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255,255,255,0.9);
 }
 .padding{
     padding-top: 10px;
@@ -58,4 +58,19 @@ a{
 .a-delete{
     color: #333333;
 }
+.a-related{
+    color: #5b626f;
+    font-size: 17px;
+}
+.related{
+    color: #3c3939
+}
+.tag{
+    display: inline-block;
+    margin: 8px;
+}
+.read{
+    margin: 20px;
+}
+
 

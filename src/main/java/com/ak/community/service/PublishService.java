@@ -1,5 +1,8 @@
 package com.ak.community.service;
 
+import com.ak.community.cache.TagCache;
+import com.ak.community.exception.CustomizeErrorCode;
+import com.ak.community.exception.CustomizeException;
 import com.ak.community.mapper.QuestionMapper;
 import com.ak.community.model.Question;
 import com.ak.community.model.User;
@@ -8,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class PublishService {
@@ -27,7 +28,11 @@ public class PublishService {
             questionMapper.insertQuestion(question);
         }
     }
-    public boolean isTruePublish(Question question,Model model){
+    public boolean isTruePublish(Question question,Model model,User user){
+        String s = TagCache.filterInvalid(question.getTag());
+        if(question.getCreator()!=user.getId()){
+            throw new CustomizeException(CustomizeErrorCode.INVALID_OPERATION);
+        }
         if (StringUtils.isBlank(question.getTitle())) {
             model.addAttribute("error", "标题不能为空");
             return false;
@@ -38,6 +43,10 @@ public class PublishService {
         }
         if (StringUtils.isBlank(question.getTag())) {
             model.addAttribute("error", "标签不能为空");
+            return false;
+        }
+        if(StringUtils.isNotBlank(s)){
+            model.addAttribute("error", "输入非法标签:"+s);
             return false;
         }
         return true;

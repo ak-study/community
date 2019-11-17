@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/community.css"/>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/community.js" type="application/javascript"></script>
 </head>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
@@ -24,7 +25,7 @@
                 <div class="form-group">
                     <label for="title">问题标题（简单扼要）:</label>
                     <input type="text" class="form-control" id="title" name="title" th:value="${title}"
-                           placeholder="问题标题……">
+                           placeholder="问题标题……" autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label for="title">问题补充 (必填，请参照右侧提示):</label>
@@ -36,7 +37,22 @@
                 <div class="form-group">
                     <label for="title">添加标签</label>
                     <input type="text" class="form-control" id="tag" name="tag" th:value="${tag}"
-                           placeholder="输入标签，用逗号分隔">
+                           placeholder="输入标签，用逗号分隔" autocomplete="off" onclick="showSelectTag()">
+                    <div id="selectTag" style="display: none">
+                        <ul class="nav nav-tabs" role="tablist"  >
+                            <li role="presentation"  th:each="selectCategory,selectCategoryStat:${tags}" th:class="${selectCategoryStat.first?'active':''}">
+                                <a th:href="@{'#'+${selectCategory.categoryName}}" aria-controls="home" role="tab" data-toggle="tab" th:text="${selectCategory.categoryName}"></a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane" th:each="selectTag,selectCategoryStat:${tags}" th:id="${selectTag.categoryName}" th:classappend="${selectCategoryStat.first?'active':''}">
+                                <span th:each="tag:${selectTag.tags}" class="tag display-1">
+                                    <span class="glyphicon glyphicon-tags" ></span>
+                                    <span class="label label-info" onclick="selectTag(this)" th:data-tag="${tag}" th:text="${tag}"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <span class="alert alert-danger" th:text="${error}" th:if="${error}!=null"></span>
                 <button type="submit" class="btn btn-success btn-publish ">发布</button>

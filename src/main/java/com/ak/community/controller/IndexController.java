@@ -1,14 +1,9 @@
 package com.ak.community.controller;
 
-import com.ak.community.dto.QuestionDTO;
 import com.ak.community.mapper.UserMapper;
-import com.ak.community.model.User;
+import com.ak.community.service.NotifyService;
 import com.ak.community.service.PageService;
 import com.ak.community.service.QuestionDTOService;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -19,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 @Controller
 public class IndexController {
@@ -35,9 +29,14 @@ public class IndexController {
     @Autowired
     PageService pageService;
 
+    @Autowired
+    NotifyService notifyService;
+
     @GetMapping("/")
-    public String indexController(Model model,@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
-        pageService.doPage(pageNum,model);
+    public String indexController(Model model,@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,HttpServletRequest request){
+        pageService.doPage(pageNum,model,true,request);
+        Integer newMsg = notifyService.getNewMsg(request);
+        request.getSession().setAttribute("newMsg",newMsg);
         return "index";
 
     }

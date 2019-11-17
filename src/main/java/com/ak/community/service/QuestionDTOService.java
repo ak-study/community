@@ -8,6 +8,7 @@ import com.ak.community.mapper.QuestionMapper;
 import com.ak.community.mapper.UserMapper;
 import com.ak.community.model.Question;
 import com.ak.community.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionDTOService {
@@ -30,13 +33,22 @@ public class QuestionDTOService {
      * 然后通过questionDTO将question和User拼接
      * @return 返回一个questionDTO列表，其中的questionDTO包含了user信息和对应的question信息
      */
-    public List<QuestionDTO> getQuestionDTOList(){
-        List<Question> questionList = questionMapper.getQuestionList();
+    public List<QuestionDTO> getQuestionDTOList(User objectUser){
+        List<Question> questionList;
+        if(objectUser!=null){
+            questionList=questionMapper.getQuestionByPerson(objectUser.getId());
+        }else {
+            questionList=questionMapper.getQuestionList();
+        }
         List<QuestionDTO> questionDTOS= new ArrayList<QuestionDTO>();
         for (Question question : questionList) {
             User user = userMapper.findUserByID(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question,questionDTO);
+            if(question.getDescription().length()>=10) {
+                String subDesc = question.getDescription().substring(0, 10);
+                questionDTO.setDescription(subDesc);
+            }
             questionDTO.setUser(user);
             questionDTOS.add(questionDTO);
         }
@@ -75,8 +87,33 @@ public class QuestionDTOService {
         return  questionDTO;
     }
 
+    /**
+     *
+     * @param questionDTO 需要查询的问题
+     * @return 与该问题相关联的问题集合（通过tag查询）
+     */
+    public List<QuestionDTO> getRelatedQuestionList(QuestionDTO questionDTO){
+        String[] tags= StringUtils.split(questionDTO.getTag(),",");//通过逗号对question里面的tag分隔，获得tag数组
+        String regexTag= Arrays.stream(tags).collect(Collectors.joining("|"));//对每个元素添加 | ，组成新字符串
+        //封装一个question，设置id和新tag
+        Question newQuestion = new Question();
+        newQuestion.setId(questionDTO.getId());
+        newQuestion.setTag(regexTag);
+        //查询返回一个与当前问题相关联的问题数组（通过tag查询）
+        List<Question> questions=questionMapper.selectRelated(newQuestion);
+        //将questions集合转换成questionDTO集合
+        List<QuestionDTO> questionDTOs = questions.stream().map(q -> {
+            QuestionDTO questionDTO1 = new QuestionDTO();
+            BeanUtils.copyProperties(q,questionDTO1);
+            return questionDTO1;
+        }).collect(Collectors.toList());
+        return  questionDTOs;
+    }
+
     @Transactional
     public void incViewCount(Long id){
         questionMapper.incViewCount(id);
     }
+
+
 }

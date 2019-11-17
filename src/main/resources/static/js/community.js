@@ -50,3 +50,17 @@ function collapseComments(e) {
         e.classList.add("active")
     }
 }
+function showSelectTag() {
+    $("#selectTag").show();
+}
+function selectTag(e) {
+    var tag = e.getAttribute("data-tag");
+    var previous=$("#tag").val();
+    if(previous.indexOf(tag)==-1){
+        if(previous){
+            $("#tag").val(previous+','+tag);
+        }else{
+            $("#tag").val(tag);
+        }
+    }
+}
