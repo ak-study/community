@@ -30,7 +30,7 @@ public class PublishService {
     }
     public boolean isTruePublish(Question question,Model model,User user){
         String s = TagCache.filterInvalid(question.getTag());
-        if(question.getCreator()!=user.getId()){
+        if(question.getId()!=null&&question.getCreator()!=user.getId()){
             throw new CustomizeException(CustomizeErrorCode.INVALID_OPERATION);
         }
         if (StringUtils.isBlank(question.getTitle())) {
