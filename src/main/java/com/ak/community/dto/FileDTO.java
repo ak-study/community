@@ -2,12 +2,11 @@ package com.ak.community.dto;
 
 import lombok.Data;
 
-/**
- * Created by codedrinker on 2019/6/26.
- */
+import java.net.URL;
 @Data
 public class FileDTO {
     private int success;
     private String message;
-    private String url;
+    private URL url;
+
 }

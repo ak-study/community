@@ -15,5 +15,4 @@ public class CommentDTO {
     private Long like_count;
     private Integer comment_count;
     private User user;
-
 }

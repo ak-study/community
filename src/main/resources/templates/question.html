@@ -119,11 +119,11 @@
                 <div class="media-left">
                     <a href="#">
                         <!--                        <img class="media-object img-circle" th:src="${question.user.avatarUrl}" >-->
-                        <img class="media-object img-rounded" src="/111.jpg">
+                        <img th:if="${session.user}!=null" class="media-object img-rounded" src="/111.jpg">
                     </a>
                 </div>
                 <div class="media-body padding">
-                    <h4 class="media-heading" th:text="${question.user.name}" ></h4>
+                    <h4 th:if="${session.user}!=null" class="media-heading" th:text="${session.user.name}" ></h4>
                 </div>
             </div><br>
             <input type="hidden" id="login" th:value="${session.user}">
@@ -161,5 +161,7 @@
             </ul>
         </div>
     </div>
+</div>
+    <div th:insert="~{footer :: foot}"></div>
 </body>
 </html>

@@ -1,0 +1,20 @@
+2019-11-23 18:22:05.886  INFO 9772 --- [restartedMain] com.ak.community.DemoApplication         : Starting DemoApplication on PC-20180624WCTR with PID 9772 (C:\Users\Administrator\IdeaProjects\community\target\classes started by Administrator in C:\Users\Administrator\IdeaProjects\community)
+2019-11-23 18:22:05.889  INFO 9772 --- [restartedMain] com.ak.community.DemoApplication         : No active profile set, falling back to default profiles: default
+2019-11-23 18:22:05.977  INFO 9772 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2019-11-23 18:22:05.978  INFO 9772 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2019-11-23 18:22:07.989  INFO 9772 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2019-11-23 18:22:08.004  INFO 9772 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-11-23 18:22:08.005  INFO 9772 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.27]
+2019-11-23 18:22:08.105  INFO 9772 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-11-23 18:22:08.106  INFO 9772 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2128 ms
+2019-11-23 18:22:08.140  INFO 9772 --- [restartedMain] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2019-11-23 18:22:08.443  INFO 9772 --- [restartedMain] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2019-11-23 18:22:08.672  INFO 9772 --- [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3307/community?serverTimezone=UTC'
+2019-11-23 18:22:09.041  INFO 9772 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-11-23 18:22:09.120  INFO 9772 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2019-11-23 18:22:09.345  INFO 9772 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-11-23 18:22:09.401  INFO 9772 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2019-11-23 18:22:09.404  INFO 9772 --- [restartedMain] com.ak.community.DemoApplication         : Started DemoApplication in 4.129 seconds (JVM running for 4.711)
+2019-11-23 18:22:14.152  INFO 9772 --- [http-nio-0.0.0.0-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-11-23 18:22:14.153  INFO 9772 --- [http-nio-0.0.0.0-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-11-23 18:22:14.159  INFO 9772 --- [http-nio-0.0.0.0-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms

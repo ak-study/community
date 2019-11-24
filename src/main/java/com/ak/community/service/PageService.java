@@ -19,12 +19,7 @@ public class PageService {
     QuestionDTOService questionDTOService;
     public void doPage(Integer pageNum, Model model, boolean allOrPerson, HttpServletRequest request){
         Page<Object> page = PageHelper.startPage(pageNum, 10);
-        List<QuestionDTO> questionDTOList;
-        if(allOrPerson){
-            questionDTOList = questionDTOService.getQuestionDTOList(null);
-        }else{
-            questionDTOList=questionDTOService.getQuestionDTOListByPerson(request);
-        }
+        List<QuestionDTO> questionDTOList = questionDTOService.getQuestionDTOList(null);
         PageInfo<QuestionDTO> pageInfo = new PageInfo<>(questionDTOList);
         pageInfo.setPages(page.getPages());//总页数
         pageInfo.setTotal(page.getTotal());//总条数

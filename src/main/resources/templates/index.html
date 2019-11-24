@@ -34,15 +34,16 @@
                     </a>
                 </p>
 <!--                <h6><span th:text="${question.description}"></span></h6>-->
-                <span class="text-desc">
-                         作者·<span th:text="${question.user.name}"></span>
+                <span class="text-desc" >
+                         <span th:if="${question.user!=null}" th:text="${question.user.name}"></span>
                         ·<span th:text="${question.commentCount}"></span> 个回复
                         ·<span th:text="${question.viewCount}"></span>次浏览
                         ·<span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
                 </span>
             </div>
         </div>
-        <nav aria-label="Page navigation">
+        <br><br>
+        <nav aria-label="Page navigation" th:if="${pageNum!=null}">
             <ul class="pagination">
                 <span class="mun"><p>当前 <span th:text="${pageNum}"></span> 页,总 <span th:text="${pageInfo.pages}"></span> 页,共 <span
                         th:text="${pageInfo.total}"></span> 条记录</p></span>
@@ -76,5 +77,6 @@
         <div th:insert="~{side :: side}"></div>
     </div>
 </div>
+<div th:insert="~{footer :: foot}"></div>
 </body>
 </html>
